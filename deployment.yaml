@@ -1,0 +1,45 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: scd-project-frontend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: scd-project-frontend
+  template:
+    metadata:
+      labels:
+        app: scd-project-frontend
+    spec:
+      containers:
+      - name: frontend
+        image: faaaroooqi/scd_project-frontend:latest
+        ports:
+        - containerPort: 3000
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: scd-project-backend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: scd-project-backend
+  template:
+    metadata:
+      labels:
+        app: scd-project-backend
+    spec:
+      containers:
+      - name: backend
+        image: faaaroooqi/scd_project-backend:latest
+        ports:
+        - containerPort: 5000
+        env:
+        - name: MONGODB_URI
+          value: "mongodb+srv://farooqi:farooqi123@cluster0.xp0xbrf.mongodb.net/"
+        command: ["node", "/app/index.js"] 
+
