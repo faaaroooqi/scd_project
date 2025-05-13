@@ -1,0 +1,30 @@
+version: '3.9'
+
+services:
+  frontend:
+    build:
+      context: ./musafirmahal-master
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    networks:
+      - scd_network
+    environment:
+      REACT_APP_BACKEND_URL: http://backend:5000
+    depends_on:
+      - backend
+
+  backend:
+    build:
+      context: ./musafirmahalbackend-master
+      dockerfile: Dockerfile
+    ports:
+      - "5000:5000"
+    networks:
+      - scd_network
+    environment:
+      MONGODB_URI: 'mongodb+srv://farooqi:farooqi123@cluster0.xp0xbrf.mongodb.net/'
+      
+networks:
+  scd_network:
+    driver: bridge
